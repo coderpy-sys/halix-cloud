@@ -1,0 +1,389 @@
+// Halix Cloud — PostgreSQL schema (billing-ready, multi-node, IP system)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CLIENT
+  STAFF
+  ADMIN
+  SUPERADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING
+}
+
+enum VmType {
+  QEMU
+  LXC
+}
+
+enum VmStatus {
+  PROVISIONING
+  RUNNING
+  STOPPED
+  PAUSED
+  SUSPENDED
+  ERROR
+  TERMINATED
+}
+
+enum IpVersion {
+  V4
+  V6
+}
+
+enum IpAssignmentState {
+  FREE
+  ASSIGNED
+  RESERVED
+  SUSPENDED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING
+  CLOSED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  OPEN
+  PAID
+  VOID
+  UNCOLLECTIBLE
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  CRYPTO_OXPAY
+  MANUAL_CREDIT
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  role          UserRole   @default(CLIENT)
+  status        UserStatus @default(ACTIVE)
+  twoFactorSecret String?  // encrypted at app layer
+  twoFactorEnabled Boolean @default(false)
+  supportPinHash  String?
+  creditsCents    BigInt   @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  sshKeys       SshKey[]
+  vms           Vm[]
+  tickets       Ticket[]
+  invoices      Invoice[]
+  apiKeys       ApiKey[]
+  auditLogs     AuditLog[] @relation("ActorAuditLogs")
+  sessions      Session[]
+  notifications Notification[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshHash  String
+  userAgent    String?
+  ip           String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+}
+
+model SshKey {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  publicKey  String
+  fingerprint String
+  createdAt  DateTime @default(now())
+}
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  prefix      String    // first 8 chars for display
+  secretHash  String    // hashed full secret
+  scopes      String[]  // e.g. ["vms:read", "vms:power"]
+  lastUsedAt  DateTime?
+  expiresAt   DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model Node {
+  id              String   @id @default(cuid())
+  name            String
+  region          String?
+  fqdn            String
+  proxmoxRealm    String   @default("pam")
+  proxmoxUser     String
+  proxmoxTokenId  String   // display id
+  proxmoxTokenSecretEnc String // AES-GCM ciphertext + iv
+  verifyTls       Boolean  @default(true)
+  maintenanceMode Boolean  @default(false)
+  weight          Int      @default(100)
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  vms             Vm[]
+  ipAssignments   IpAssignment[]
+}
+
+model Plan {
+  id              String   @id @default(cuid())
+  name            String
+  description     String?
+  cpuCores        Int
+  ramMb           Int
+  diskGb          Int
+  bandwidthTb     Decimal  @default(1) @db.Decimal(10, 2)
+  ipv4Count       Int      @default(1)
+  ipv6Mode        String   @default("SLAAC") // SLAAC | STATIC64 | ROUTED48
+  priceMonthlyCents BigInt @default(0)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  vms Vm[]
+}
+
+model Vm {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  nodeId          String
+  node            Node      @relation(fields: [nodeId], references: [id], onDelete: Restrict)
+  planId          String?
+  plan            Plan?     @relation(fields: [planId], references: [id])
+  name            String
+  hostname        String?
+  type            VmType
+  status          VmStatus  @default(PROVISIONING)
+  proxmoxVmid     Int
+  proxmoxPool     String?
+  cpuCores        Int
+  ramMb           Int
+  diskGb          Int
+  templateId      String?
+  cloudInit       Json?
+  lastPowerEvent  DateTime?
+  suspendedAt     DateTime?
+  terminatedAt    DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  ipAssignments   IpAssignment[]
+  backups         Backup[]
+  metricsSamples  MetricsSample[]
+  tickets         Ticket[]        @relation("TicketVm")
+  firewallRules   FirewallRule[]
+}
+
+model IpPool {
+  id          String    @id @default(cuid())
+  name        String
+  version     IpVersion
+  cidr        String    // e.g. 203.0.113.0/24 or 2001:db8::/48
+  gateway     String?
+  vlanId      Int?
+  natEnabled  Boolean   @default(false)
+  floatingCap Int       @default(0)
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  ranges      IpRange[]
+}
+
+model IpRange {
+  id        String   @id @default(cuid())
+  poolId    String
+  pool      IpPool   @relation(fields: [poolId], references: [id], onDelete: Cascade)
+  startAddr String   // inclusive canonical
+  endAddr   String   // inclusive canonical
+  nodeId    String?  // optional bind to node for routed traffic
+  createdAt DateTime @default(now())
+
+  assignments IpAssignment[]
+}
+
+model IpAssignment {
+  id         String              @id @default(cuid())
+  rangeId    String
+  range      IpRange             @relation(fields: [rangeId], references: [id], onDelete: Cascade)
+  address    String              @unique
+  version    IpVersion
+  state      IpAssignmentState   @default(FREE)
+  rdns       String?
+  abuseFlag  Boolean             @default(false)
+  vmId       String?
+  vm         Vm?                 @relation(fields: [vmId], references: [id])
+  nodeId     String?
+  node       Node?               @relation(fields: [nodeId], references: [id])
+  floating   Boolean             @default(false)
+  metadata   Json?
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+}
+
+model FirewallRule {
+  id        String   @id @default(cuid())
+  vmId      String
+  vm        Vm       @relation(fields: [vmId], references: [id], onDelete: Cascade)
+  direction String   // IN | OUT
+  action    String   // ACCEPT | DROP | REJECT
+  protocol  String?
+  source    String?
+  dest      String?
+  destPort  String?
+  priority  Int      @default(100)
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Backup {
+  id          String   @id @default(cuid())
+  vmId        String
+  vm          Vm       @relation(fields: [vmId], references: [id], onDelete: Cascade)
+  kind        String   // snapshot | file
+  storageId   String?
+  sizeBytes   BigInt?
+  proxmoxSnap String?
+  scheduled   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+}
+
+model MetricsSample {
+  id         String   @id @default(cuid())
+  vmId       String
+  vm         Vm       @relation(fields: [vmId], references: [id], onDelete: Cascade)
+  cpuPercent Float
+  ramUsedMb  Int
+  netInBps   Float
+  netOutBps  Float
+  diskReadBps Float
+  diskWriteBps Float
+  ts         DateTime @default(now())
+
+  @@index([vmId, ts])
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vmId        String?
+  vm          Vm?          @relation("TicketVm", fields: [vmId], references: [id])
+  subject     String
+  department  String       @default("general")
+  status      TicketStatus @default(OPEN)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  messages    TicketMessage[]
+}
+
+model TicketMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String?
+  body      String
+  staff     Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  pinned    Boolean  @default(false)
+  audience  String   @default("all") // all | clients | staff
+  publishedAt DateTime?
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        InvoiceStatus @default(DRAFT)
+  currency      String        @default("usd")
+  subtotalCents BigInt
+  taxCents      BigInt        @default(0)
+  totalCents    BigInt
+  dueAt         DateTime?
+  paidAt        DateTime?
+  externalId    String?
+  createdAt     DateTime      @default(now())
+
+  lines InvoiceLine[]
+}
+
+model InvoiceLine {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int      @default(1)
+  unitCents   BigInt
+  metadata    Json?
+}
+
+model Payment {
+  id         String          @id @default(cuid())
+  invoiceId  String?
+  userId     String
+  provider   PaymentProvider
+  amountCents BigInt
+  status     String
+  externalId String?
+  raw        Json?
+  createdAt  DateTime @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actor      User?    @relation("ActorAuditLogs", fields: [actorId], references: [id])
+  action     String
+  resource   String
+  resourceId String?
+  ip         String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([resource, resourceId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-halix-void text-zinc-100 antialiased;
+  background-image: radial-gradient(
+      ellipse 100% 80% at 50% -40%,
+      rgba(124, 58, 237, 0.22),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #0a0a0f 0%, #08080c 100%);
+}
+
+/* subtle grid */
+.halix-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+  z-index: 0;
+}

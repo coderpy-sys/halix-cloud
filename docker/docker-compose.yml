@@ -1,0 +1,53 @@
+# Optional `docker/.env` (see install/halix-install.sh) sets HALIX_DB_PASSWORD, HALIX_PG_PORT, HALIX_REDIS_PORT
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: halix-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${HALIX_DB_USER:-halix}
+      POSTGRES_PASSWORD: ${HALIX_DB_PASSWORD:-halix_dev_change_me}
+      POSTGRES_DB: ${HALIX_DB_NAME:-halix}
+    ports:
+      - "${HALIX_PG_PORT:-5432}:5432"
+    volumes:
+      - halix_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U halix -d halix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: halix-redis
+    restart: unless-stopped
+    ports:
+      - "${HALIX_REDIS_PORT:-6379}:6379"
+    volumes:
+      - halix_redis:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Optional: run API in Docker after building image
+  # api:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile.api
+  #   env_file: ../apps/api/.env
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   ports:
+  #     - "4000:4000"
+
+volumes:
+  halix_pgdata:
+  halix_redis:

@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# Env
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test
+coverage/
+
+# Prisma
+apps/api/prisma/migrations/**/migration_lock.toml
+
+# Misc
+.turbo
+*.local
+
+# Optional local reference clone (not part of Halix source)
+reference/convoy-panel/
+
+# Installer generated snippets (regenerate with install/halix-install.sh)
+install/output/

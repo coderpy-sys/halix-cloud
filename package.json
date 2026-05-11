@@ -1,0 +1,21 @@
+{
+  "name": "halix-cloud",
+  "private": true,
+  "packageManager": "npm@9.6.3",
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@halix/web",
+    "dev:api": "npm run start:dev --workspace=@halix/api",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "docker:up": "docker compose -f docker/docker-compose.yml up -d",
+    "docker:down": "docker compose -f docker/docker-compose.yml down",
+    "install:halix": "bash install/halix-install.sh"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}

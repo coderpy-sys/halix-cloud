@@ -1,0 +1,16 @@
+[Unit]
+Description=Halix Cloud Web (Next.js)
+After=network.target halix-api.service
+
+[Service]
+Type=simple
+User=halix
+Group=halix
+WorkingDirectory=__INSTALL_ROOT__/apps/web
+EnvironmentFile=__INSTALL_ROOT__/apps/web/.env
+ExecStart=/bin/bash -lc 'cd __INSTALL_ROOT__/apps/web && exec ./node_modules/.bin/next start -p __WEB_PORT__'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Getting Started · Halix Cloud</title>
+  <meta name="description" content="Install Halix Cloud: dependencies, database, API, web panel, Docker, and workers." />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #12121a;
+      --line: #252532;
+      --text: #e4e4e7;
+      --muted: #8b8ba3;
+      --accent: #a78bfa;
+      --accent2: #7c3aed;
+      --warn: #fbbf24;
+      --danger: #f87171;
+      --ok: #34d399;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88em;
+    }
+    pre {
+      background: #0d0d14;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      overflow-x: auto;
+      margin: 0.75rem 0 1.25rem;
+    }
+    code { color: #c4b5fd; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem 4rem; display: grid; grid-template-columns: 240px 1fr; gap: 2.5rem; }
+    @media (max-width: 900px) {
+      .wrap { grid-template-columns: 1fr; padding-top: 0; }
+      aside { position: static !important; border-right: none !important; padding: 1rem 0 !important; }
+    }
+    header.top {
+      border-bottom: 1px solid var(--line);
+      background: rgba(18, 18, 26, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    header.top .inner {
+      max-width: 1120px; margin: 0 auto; padding: 0.85rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+    }
+    header.top strong { font-size: 1rem; letter-spacing: 0.04em; }
+    header.top span { color: var(--muted); font-size: 0.8rem; }
+    aside {
+      position: sticky;
+      top: 3.5rem;
+      align-self: start;
+      padding: 1rem 1rem 1rem 0;
+      border-right: 1px solid var(--line);
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+    aside nav { font-size: 0.82rem; }
+    aside nav a {
+      display: block;
+      padding: 0.35rem 0;
+      color: var(--muted);
+      border-left: 2px solid transparent;
+      padding-left: 0.65rem;
+      margin-left: -2px;
+    }
+    aside nav a:hover { color: var(--text); }
+    aside nav a.active { color: var(--accent); border-left-color: var(--accent2); }
+    main { padding: 1.5rem 0 3rem; min-width: 0; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .lead { color: var(--muted); margin: 0 0 2rem; font-size: 1rem; }
+    h2 {
+      font-size: 1.35rem;
+      margin: 2.5rem 0 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 4rem;
+    }
+    h2:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+    h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; color: #fafafa; }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.5rem 0 1rem; padding-left: 1.35rem; color: #d4d4d8; }
+    li { margin: 0.35rem 0; }
+    .note {
+      border-left: 3px solid var(--accent2);
+      background: rgba(124, 58, 237, 0.08);
+      padding: 0.85rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+    .warn {
+      border-left-color: var(--warn);
+      background: rgba(251, 191, 36, 0.06);
+    }
+    .danger {
+      border-left-color: var(--danger);
+      background: rgba(248, 113, 113, 0.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1rem 0 1.5rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+    }
+    th { background: var(--card); color: var(--muted); font-weight: 600; }
+    .ok { color: var(--ok); }
+    .badge { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+    footer.doc {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="inner">
+      <div>
+        <strong>HALIX CLOUD</strong>
+        <span> · Installation</span>
+      </div>
+      <div>
+        <a href="https://halix.cloud">halix.cloud</a>
+        ·
+        <a href="https://discord.gg/freehost">Discord</a>
+        ·
+        <a href="ARCHITECTURE.md">Architecture (Markdown)</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <aside>
+      <nav id="toc">
+        <span class="badge">On this page</span>
+        <a href="#overview">Overview</a>
+        <a href="#os">Server OS</a>
+        <a href="#dependencies">Dependencies</a>
+        <a href="#obtain">Obtain the code</a>
+        <a href="#installer">Automated installer</a>
+        <a href="#database">Database &amp; Redis</a>
+        <a href="#env">Environment files</a>
+        <a href="#install">Install packages</a>
+        <a href="#migrate">Database migrations</a>
+        <a href="#run-dev">Run (development)</a>
+        <a href="#auth">First user &amp; auth</a>
+        <a href="#queues">Queue workers</a>
+        <a href="#production">Production paths</a>
+        <a href="#docker">Docker image (API)</a>
+        <a href="#reverse-proxy">Reverse proxy</a>
+        <a href="#update">Updating</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+      </nav>
+    </aside>
+
+    <main>
+      <h1 id="overview">Getting started</h1>
+      <p class="lead">
+        Halix Cloud is a self-hosted <strong>VPS control plane</strong> (NestJS API, Next.js panel, PostgreSQL, Redis, BullMQ workers).
+        This guide mirrors the <em>shape</em> of classic panel install docs (for example
+        <a href="https://pterodactyl.io/panel/1.0/getting_started.html">Pterodactyl Panel — Getting Started</a>)
+        but targets <strong>this repository’s stack</strong> — not Wings, not PHP, not game eggs.
+      </p>
+
+      <div class="note warn">
+        <strong>Expectations.</strong> You need a Linux host (or WSL2 for dev), Docker or local Postgres/Redis, and comfort with terminals.
+        Halix is under active development: treat production installs as “you operate the stack.”
+      </div>
+
+      <h2 id="os">Picking a server OS</h2>
+      <p>Primary targets (same class as common panel docs):</p>
+      <table>
+        <thead>
+          <tr><th>OS</th><th>Version</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ubuntu</td><td class="ok">22.04 / 24.04</td><td>Recommended for servers; matches <code>docs/DEPLOYMENT.md</code>.</td></tr>
+          <tr><td>Debian</td><td>12+</td><td>Fine with Docker Engine + Compose plugin.</td></tr>
+          <tr><td>Rocky / Alma</td><td>8 / 9</td><td>Use Docker or install Node 20+ from NodeSource or similar.</td></tr>
+          <tr><td>Windows</td><td>10 / 11</td><td>Local dev only: Node + Docker Desktop or WSL2.</td></tr>
+        </tbody>
+      </table>
+      <p>OpenVZ-only VPS hosts often break Docker — prefer KVM VMs or bare metal for production.</p>
+
+      <h2 id="dependencies">Dependencies</h2>
+      <ul>
+        <li><strong>Node.js</strong> ≥ 18.18 (LTS <strong>20.x</strong> recommended for Next.js 15 + tooling).</li>
+        <li><strong>npm</strong> 9+ (workspace install at repo root).</li>
+        <li><strong>PostgreSQL</strong> 16+ (or use the provided Docker Compose service).</li>
+        <li><strong>Redis</strong> 7+ (queues; same Compose file).</li>
+        <li><strong>Git</strong> — clone your Halix fork or this monorepo.</li>
+        <li>Optional: <strong>Docker</strong> + Compose v2 for <code>docker/docker-compose.yml</code>.</li>
+      </ul>
+      <h3>Example: Ubuntu 24.04 (Node + Docker)</h3>
+      <pre><code># Node 20 (example using NodeSource — verify current instructions on nodejs.org)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Docker (official docs) — then compose plugin
+sudo apt-get install -y docker.io docker-compose-v2</code></pre>
+
+      <h2 id="obtain">Obtain the code</h2>
+      <pre><code>git clone &lt;your-halix-repo-url&gt; halix-cloud
+cd halix-cloud</code></pre>
+      <p>Repository layout (short): <code>apps/web</code> (Next.js), <code>apps/api</code> (NestJS + Prisma), <code>docker/</code>, <code>docs/</code>.</p>
+
+      <h2 id="installer">Automated installer (recommended)</h2>
+      <p>
+        Halix ships an <strong>interactive</strong> installer (Bash + optional PowerShell) that can clone from a
+        <strong>.git</strong> URL, write Docker and app <code>.env</code> files with <strong>custom ports</strong>,
+        start Postgres/Redis, run <code>prisma db push</code>, create the <strong>first SUPERADMIN</strong> user,
+        and optionally register a <strong>Proxmox VE</strong> node — then emit <strong>systemd</strong> and
+        <strong>nginx</strong> snippets under <code>install/output/</code>.
+      </p>
+      <ul>
+        <li>Full reference: <code>install/README.md</code> in the repository (same tree as this HTML).</li>
+        <li>From an existing clone: <code>chmod +x install/halix-install.sh &amp;&amp; ./install/halix-install.sh --from-repo</code></li>
+        <li>Fresh clone: set <code>HALIX_REPO_URL</code> (must end with <code>.git</code>) at the top of the script or export it, then <code>bash install/halix-install.sh</code>.</li>
+        <li>Windows: <code>.\install\halix-install.ps1 -FromRepo</code> (Docker Desktop + Node required).</li>
+      </ul>
+      <pre><code>npm run install:halix   # runs bash install/halix-install.sh (Unix / WSL)</code></pre>
+
+      <h2 id="database">Database &amp; Redis</h2>
+      <h3>Option A — Docker (quickest)</h3>
+      <pre><code>npm run docker:up
+# or: docker compose -f docker/docker-compose.yml up -d</code></pre>
+      <p>Optional <code>docker/.env</code> — copy <code>docker/.env.example</code> to set <code>HALIX_PG_PORT</code>, <code>HALIX_REDIS_PORT</code>, and DB password for Compose variable substitution.</p>
+      <p>Defaults in Compose: user/db <code>halix</code>, password <code>halix_dev_change_me</code> unless overridden.</p>
+      <h3>Option B — Managed Postgres + Redis</h3>
+      <p>Create a database and user; allow TLS if your provider requires it. Set <code>DATABASE_URL</code> and <code>REDIS_URL</code> in <code>apps/api/.env</code>.</p>
+
+      <h2 id="env">Environment files</h2>
+      <pre><code>cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env</code></pre>
+      <p>Edit <strong>apps/api/.env</strong> (minimum):</p>
+      <ul>
+        <li><code>DATABASE_URL</code> — Prisma connection string.</li>
+        <li><code>REDIS_URL</code> — e.g. <code>redis://127.0.0.1:6379</code>.</li>
+        <li><code>JWT_ACCESS_SECRET</code> / <code>JWT_REFRESH_SECRET</code> — long random strings.</li>
+        <li><code>CORS_ORIGIN</code> — e.g. <code>http://localhost:3000</code> for dev.</li>
+      </ul>
+      <p>Edit <strong>apps/web/.env</strong>:</p>
+      <ul>
+        <li><code>NEXT_PUBLIC_API_URL</code> — API origin (e.g. <code>http://localhost:4000</code>).</li>
+        <li><code>NEXT_PUBLIC_SOCKET_URL</code> — usually same host as API for Socket.IO.</li>
+      </ul>
+
+      <h2 id="install">Install packages</h2>
+      <p>From the <strong>repository root</strong>:</p>
+      <pre><code>npm install</code></pre>
+
+      <h2 id="migrate">Database migrations</h2>
+      <p>Prisma lives under <code>apps/api</code>. First-time schema push:</p>
+      <pre><code>cd apps/api
+npx prisma migrate dev --name init
+npx prisma generate</code></pre>
+      <p>Production deploys should use:</p>
+      <pre><code>npx prisma migrate deploy</code></pre>
+
+      <h2 id="run-dev">Run (development)</h2>
+      <p>Terminal 1 — API (port 4000 by default):</p>
+      <pre><code>npm run dev:api</code></pre>
+      <p>Terminal 2 — Web panel (port 3000):</p>
+      <pre><code>npm run dev</code></pre>
+      <ul>
+        <li>Panel: <a href="http://localhost:3000">http://localhost:3000</a></li>
+        <li>API health: <a href="http://localhost:4000/health">http://localhost:4000/health</a></li>
+        <li>OpenAPI UI: <a href="http://localhost:4000/docs">http://localhost:4000/docs</a></li>
+      </ul>
+
+      <h2 id="auth">First user &amp; auth</h2>
+      <p>Register via API (or add a seed script later):</p>
+      <pre><code>curl -s -X POST http://localhost:4000/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@example.com","password":"YourLongPassword12","firstName":"Admin"}'</code></pre>
+      <p>Then login:</p>
+      <pre><code>curl -s -X POST http://localhost:4000/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@example.com","password":"YourLongPassword12"}'</code></pre>
+      <p>In the browser panel, set the access token for API calls (until the login UI wires automatically):</p>
+      <pre><code>localStorage.setItem('halix_access_token', '&lt;paste accessToken&gt;')</code></pre>
+
+      <h2 id="queues">Queue workers</h2>
+      <p>Analogous to Pterodactyl’s <a href="https://pterodactyl.io/panel/1.0/getting_started.html">queue listeners</a>: long-running jobs (provision, reinstall, metrics) should not block HTTP requests.</p>
+      <ul>
+        <li>Redis must be running.</li>
+        <li>Implement <code>apps/worker</code> (recommended) as a separate Node process that subscribes to BullMQ queues registered in the API (e.g. <code>vps-provision</code>).</li>
+        <li>Use <strong>systemd</strong> or <strong>supervisor</strong> to keep workers alive; restart on failure.</li>
+      </ul>
+      <div class="note">
+        <strong>Scheduler.</strong> For periodic metrics scrape or billing reconciliation, use <code>node-cron</code> inside a small worker container or system cron calling a CLI — see <code>docs/ARCHITECTURE.md</code> roadmap.
+      </div>
+
+      <h2 id="production">Production paths</h2>
+      <ol>
+        <li><strong>Build</strong>: <code>npm run build</code> at root (builds workspaces that define the script).</li>
+        <li><strong>API</strong>: <code>cd apps/api &amp;&amp; npm run start:prod</code> (or Docker image via <code>docker/Dockerfile.api</code>).</li>
+        <li><strong>Web</strong>: <code>cd apps/web &amp;&amp; npm run start</code> (behind TLS terminator).</li>
+        <li><strong>Workers</strong>: separate service(s) with same env as API for DB/Redis.</li>
+      </ol>
+      <p>See <code>docs/DEPLOYMENT.md</code> for Cloudflare, TLS, and hardening bullets.</p>
+
+      <h2 id="docker">Docker image (API)</h2>
+      <p>From repo root (adjust tag/registry):</p>
+      <pre><code>docker build -f docker/Dockerfile.api -t halix-api:local .</code></pre>
+      <p>Ensure runtime env includes <code>DATABASE_URL</code>, secrets, and that migrations ran before traffic.</p>
+
+      <h2 id="reverse-proxy">Reverse proxy</h2>
+      <p>Put <strong>NGINX</strong>, <strong>Caddy</strong>, or <strong>Traefik</strong> in front:</p>
+      <ul>
+        <li>Route <code>/</code> → Next.js upstream.</li>
+        <li>Route <code>/v1</code> (and <code>/docs</code> if desired) → NestJS upstream.</li>
+        <li>WebSocket upgrade for Socket.IO path <code>/realtime</code> (namespace) — confirm your gateway path in Nest config.</li>
+      </ul>
+
+      <h2 id="update">Updating</h2>
+      <pre><code>git pull
+npm install
+cd apps/api &amp;&amp; npx prisma migrate deploy
+npm run build</code></pre>
+      <p>Restart API, web, and workers. Read migration notes if Prisma schema changed.</p>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <table>
+        <thead><tr><th>Symptom</th><th>Check</th></tr></thead>
+        <tbody>
+          <tr><td><code>Prisma</code> cannot connect</td><td><code>DATABASE_URL</code>, firewall, Postgres listening, Docker health.</td></tr>
+          <tr><td>API starts but queues hang</td><td><code>REDIS_URL</code>, Redis maxmemory/eviction, worker process running.</td></tr>
+          <tr><td>Panel “Not authenticated” toasts</td><td>Login; set <code>halix_access_token</code>; <code>CORS_ORIGIN</code> must include panel URL.</td></tr>
+          <tr><td>Web build ESLint errors</td><td>Node 20+ recommended; run <code>npm run lint</code> in <code>apps/web</code>.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note danger">
+        <strong>Secrets.</strong> Never commit <code>.env</code> files. Rotate JWT and DB passwords if exposed. Proxmox tokens belong in the DB encrypted — see architecture doc.
+      </div>
+
+      <footer class="doc">
+        Halix Cloud documentation · Structure inspired by common panel install guides (e.g. Pterodactyl getting started).
+        Product: <a href="https://halix.cloud">halix.cloud</a> ·
+        Deep design: <a href="./ARCHITECTURE.md">ARCHITECTURE.md</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var links = document.querySelectorAll('#toc a[href^="#"]');
+      var sections = [];
+      links.forEach(function (a) {
+        var id = a.getAttribute('href').slice(1);
+        var el = document.getElementById(id);
+        if (el) sections.push({ id: id, el: el, link: a });
+      });
+      function onScroll() {
+        var y = window.scrollY + 90;
+        var current = sections[0];
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el.offsetTop <= y) current = sections[i];
+        }
+        sections.forEach(function (s) {
+          s.link.classList.toggle('active', current && s.id === current.id);
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
