@@ -1,46 +1,19 @@
-# Dependencies
-node_modules/
-.pnp
-.pnp.js
+# Optional: panel-only repo — uncomment to stop tracking the Nest/Next monorepo
+# Hp-v1/
 
-# Build
-dist/
-.next/
-out/
-build/
-*.tsbuildinfo
+# Hp-v2 build & vendor (also covered by Hp-v2/.gitignore when working inside that folder)
+Hp-v2/vendor/
+Hp-v2/node_modules/
+Hp-v2/.env
+Hp-v2/.env.*
+!Hp-v2/.env.example
+Hp-v2/public/hot
+Hp-v2/public/build
+Hp-v2/storage/*.key
+Hp-v2/bootstrap/cache/*.php
+Hp-v2/.phpunit.result.cache
 
-# Env
-.env
-.env.*
-!.env.example
-
-# IDE
-.idea/
-.vscode/*
-!.vscode/extensions.json
-
-# OS
+# Root / IDE
 .DS_Store
 Thumbs.db
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-
-# Test
-coverage/
-
-# Prisma
-apps/api/prisma/migrations/**/migration_lock.toml
-
-# Misc
-.turbo
-*.local
-
-# Optional local reference clone (not part of Halix source)
-reference/convoy-panel/
-
-# Installer generated snippets (regenerate with install/halix-install.sh)
-install/output/
+.idea/

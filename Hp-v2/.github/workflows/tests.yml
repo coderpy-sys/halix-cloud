@@ -1,0 +1,37 @@
+name: Tests
+on:
+  push:
+    branches:
+      - 'develop'
+      - '3.0-develop'
+  pull_request:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create environment file
+        run: cp .env.ci .env
+
+      - name: Start Docker Containers
+        run: docker compose -f docker-compose.ci.yml up -d
+
+      - name: Install Composer dependencies
+        run: docker compose -f docker-compose.ci.yml exec workspace composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Install NPM dependencies
+        run: docker compose -f docker-compose.ci.yml exec workspace npm install
+
+      - name: Build frontend assets
+        run: docker compose -f docker-compose.ci.yml exec workspace npm run build
+
+      - name: Run database migrations
+        run: docker compose -f docker-compose.ci.yml exec workspace php artisan migrate
+
+      - name: Run feature tests
+        run: docker compose -f docker-compose.ci.yml exec workspace vendor/bin/pest --bootstrap vendor/autoload.php tests/Feature
+
+      - name: Run unit tests
+        run: docker compose -f docker-compose.ci.yml exec workspace vendor/bin/pest --bootstrap vendor/autoload.php tests/Unit
