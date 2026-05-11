@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Providers } from '@/components/providers';
 import './globals.css';
 
 const fontSans = Inter({
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} font-sans halix-grid`}
       >
         {children}
+        <Providers />
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 import { PanelSidebar } from '@/components/panel/panel-sidebar';
-import { ToastHost } from '@/components/ui/toast-host';
 import Link from 'next/link';
 import { LifeBuoy } from 'lucide-react';
 
@@ -23,7 +22,6 @@ export default function PanelLayout({
         </header>
         <div className="flex-1 overflow-auto p-6 lg:p-10">{children}</div>
       </div>
-      <ToastHost />
     </div>
   );
 }

@@ -50,7 +50,7 @@ Open [http://localhost:3000](http://localhost:3000). API defaults to [http://loc
 
 The web app includes **original** helpers shaped by common panel practice (as seen in reference UIs such as [ConvoyPanel](https://github.com/ConvoyPanel/panel)): `halixFetch` + `getErrorMessage`, URL `?page=` pagination, persisted local state, stackable toasts, byte formatting, and a **VPS sub-navigation** shell (`/panel/vms/[id]/*`). These are not copied source — safe to ship in your product.
 
-After `POST /v1/auth/login`, store `accessToken` as `localStorage.setItem('halix_access_token', '<jwt>')` so panel API calls authenticate.
+The **Login** and **Register** pages call the API and save `halix_access_token` in `localStorage` automatically. If the browser shows a network/CORS error, set `CORS_ORIGIN` in `apps/api/.env` to your panel origin (e.g. `http://localhost:3000`).
 
 ## Reference clone (ConvoyPanel)
 
