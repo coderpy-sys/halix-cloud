@@ -17,7 +17,7 @@ set -euo pipefail
 # -----------------------------------------------------------------------------
 # Default clone target — MUST end with .git (edit or export HALIX_REPO_URL)
 # -----------------------------------------------------------------------------
-: "${HALIX_REPO_URL:=https://github.com/your-org/halix-cloud.git}"
+: "${HALIX_REPO_URL:=https://github.com/coderpy-sys/halix-cloud.git}"
 
 : "${INSTALL_ROOT:=/opt/halix-cloud}"
 : "${HALIX_NONINTERACTIVE:=0}"
