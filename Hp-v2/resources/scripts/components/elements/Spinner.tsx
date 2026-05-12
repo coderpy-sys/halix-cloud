@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { ReactNode, Suspense } from 'react'
 import tw from 'twin.macro'
 
-import LogoOutline from '@/components/elements/LogoOutline'
+import HalixLogoMark from '@/components/elements/HalixLogoMark'
 
 interface Props {
     screen?: boolean
@@ -16,25 +16,21 @@ interface Spinner extends React.FC<Props> {
     }>
 }
 
-const SpinnerContainer = styled.div`
-    svg {
-        ${tw`w-14`}
+const SpinWrap = styled.div`
+    ${tw`grid place-items-center`}
+    animation: halix-spin 1.05s linear infinite;
+    filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.35));
+
+    img {
+        ${tw`w-14 h-14`}
     }
-    svg path {
-        animation: dash 2s cubic-bezier(0.45, 0.09, 0.6, 0.89) infinite;
-    }
-    @keyframes dash {
-        0% {
-            stroke-dasharray: 100 2652;
-            stroke-dashoffset: 0;
+
+    @keyframes halix-spin {
+        from {
+            transform: rotate(0deg);
         }
-        50% {
-            stroke-dasharray: 2352 400;
-            stroke-dashoffset: 2752;
-        }
-        100% {
-            stroke-dasharray: 100 2652;
-            stroke-dashoffset: 5504;
+        to {
+            transform: rotate(360deg);
         }
     }
 `
@@ -44,15 +40,15 @@ const Spinner: Spinner = ({ screen, flat }: Props) => {
         <div
             className={`grid place-items-center w-full ${
                 screen ? 'h-screen' : 'h-40'
-            } ${flat && 'dark:bg-black'}`}
+            } ${flat ? 'bg-accent-1' : ''}`}
         >
-            <SpinnerContainer>
-                <LogoOutline
-                    className='text-foreground'
-                    strokeWidth={'25px'}
-                    viewBox={'-13 -13 538 538'}
+            <SpinWrap>
+                <HalixLogoMark
+                    className='h-14 w-14'
+                    alt=''
+                    aria-hidden
                 />
-            </SpinnerContainer>
+            </SpinWrap>
         </div>
     )
 }

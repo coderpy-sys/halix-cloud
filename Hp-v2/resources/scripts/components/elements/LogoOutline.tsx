@@ -1,20 +1,29 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, useId } from 'react'
 
+/** Outline variant of the Halix shard mark (for rare stroke-only use). */
 const LogoOutline = (props: ComponentProps<'svg'>) => {
+    const uid = useId().replace(/:/g, '')
+    const gid = `halix-stroke-${uid}`
+
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
+            viewBox='-36 -36 72 72'
+            aria-hidden
             {...props}
         >
-            <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='1.6'
-                d='M19.35 10.04a7 7 0 0 0-13.4-1.82A4.5 4.5 0 0 0 6.5 17H13l-.97 2.3a1 1 0 0 0 .92 1.39h.02a1 1 0 0 0 .87-.5l3.75-6.5A1 1 0 0 0 16.7 12H14l1.2-2.8a1 1 0 0 0-1.84-.8L11.4 12a1 1 0 0 0 .88 1.5h2.61l-1.76 3.05.37-.89a1 1 0 0 0-.92-1.39H6.5a2.5 2.5 0 0 1-.22-4.99 1 1 0 0 0 .86-.73 5 5 0 0 1 9.82 1.04 1 1 0 0 0 .86.86A2.5 2.5 0 0 1 19.5 14a2.49 2.49 0 0 1-1.5 2.29 1 1 0 1 0 .78 1.84A4.5 4.5 0 0 0 19.35 10.04z'
-            />
+            <defs>
+                <linearGradient id={gid} x1='0%' y1='0%' x2='100%' y2='100%'>
+                    <stop offset='0%' stopColor='#e9d5ff' />
+                    <stop offset='100%' stopColor='#7c3aed' />
+                </linearGradient>
+            </defs>
+            <g stroke={`url(#${gid})`} strokeLinejoin='round' strokeWidth='2.2'>
+                <path transform='rotate(0)' d='M 0,-24 L 14,14 L -2,6 Z' />
+                <path transform='rotate(120)' d='M 0,-24 L 14,14 L -2,6 Z' />
+                <path transform='rotate(240)' d='M 0,-24 L 14,14 L -2,6 Z' />
+            </g>
         </svg>
     )
 }

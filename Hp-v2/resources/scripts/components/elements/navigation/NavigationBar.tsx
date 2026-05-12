@@ -14,7 +14,7 @@ import { Link, useMatch, useMatches } from 'react-router-dom'
 import http from '@/api/http'
 
 import ContentContainer from '@/components/elements/ContentContainer'
-import Logo from '@/components/elements/Logo'
+import HalixLogoMark from '@/components/elements/HalixLogoMark'
 import NavLink from '@/components/elements/navigation/NavLink'
 import NavigationDropdown from '@/components/elements/navigation/NavigationDropdown'
 import UserDropdown from '@/components/elements/navigation/UserDropdown'
@@ -120,7 +120,11 @@ const NavigationBar = () => {
                             to={isAdminArea ? '/admin' : '/'}
                             className='flex items-center space-x-3'
                         >
-                            <Logo className='w-6 h-6 text-foreground' />
+                            <HalixLogoMark
+                                className='h-8 w-8 shrink-0'
+                                alt=''
+                                aria-hidden
+                            />
                             <h1 className='font-semibold text-lg text-foreground'>
                                 Halix Cloud
                             </h1>
@@ -164,7 +168,11 @@ const NavigationBar = () => {
                             transition: 'width 0.25s ease',
                         }}
                     >
-                        <Logo className='w-5 h-5 text-foreground' />
+                        <HalixLogoMark
+                            className='h-6 w-6 shrink-0'
+                            alt=''
+                            aria-hidden
+                        />
                     </div>
                     <div className='flex z-[2000] overflow-x-auto scrollbar-hide'>
                         {routes.map(route => (

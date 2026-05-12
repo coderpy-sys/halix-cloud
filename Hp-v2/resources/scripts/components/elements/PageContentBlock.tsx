@@ -47,7 +47,7 @@ const PageContentBlock = ({
                 </ContentContainer>
                 <ContentContainer>
                     <div className='flex justify-between pb-8'>
-                        <p className='text-xs text-stone-500'>
+                        <p className='text-xs text-accent-500/90'>
                             2024-2026 Halix Cloud
                         </p>
 
@@ -59,7 +59,7 @@ const PageContentBlock = ({
                             }
                             onLabel={<MoonIcon className='w-4 h-4' />}
                             offLabel={
-                                <SunIcon className='w-4 h-4 text-black' />
+                                <SunIcon className='w-4 h-4 text-amber-200' />
                             }
                         />
                     </div>

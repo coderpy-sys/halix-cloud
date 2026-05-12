@@ -75,10 +75,10 @@ export const routes: Route[] = [
 ]
 
 export const AdminBanner = () => (
-    <div className='bg-foreground py-1'>
+    <div className='bg-gradient-to-r from-violet-950 via-violet-900 to-indigo-950 border-b border-violet-500/25 py-1.5'>
         <ContentContainer>
             <Link to='/'>
-                <p className='text-background text-xs font-medium uppercase tracking-wide'>
+                <p className='text-violet-100/95 text-xs font-medium uppercase tracking-wide'>
                     Exit Administration
                 </p>
             </Link>

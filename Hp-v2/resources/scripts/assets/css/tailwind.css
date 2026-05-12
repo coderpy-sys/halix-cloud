@@ -16,21 +16,21 @@
         --color-warning-light: #f7b955;
         --color-warning: #f5a623;
         --color-warning-dark: #ab570a;
-        /* Halix Cloud — light */
-        --color-foreground: #1c1133;
-        --color-background: #ffffff;
+        /* Halix Cloud — default (deep; distinct from pale “hosting panel” look) */
+        --color-foreground: #f5f3ff;
+        --color-background: #0a0512;
 
         /* surfaces */
-        --color-accent-1: #fbf7ff;
-        --color-accent-2: #f4ebff;
-        --color-accent-3: #ead7ff;
+        --color-accent-1: #050208;
+        --color-accent-2: #12081f;
+        --color-accent-3: #1c1030;
 
         /* brand + text ladder */
-        --color-accent-4: #a78bfa; /* purple-400 */
-        --color-accent-5: #6d28d9; /* deep Halix purple */
-        --color-accent-6: #1c1133; /* body text */
-        --color-accent-7: #2a1a4a;
-        --color-accent-8: #18181b;
+        --color-accent-4: #7c3aed;
+        --color-accent-5: #a78bfa;
+        --color-accent-6: #ddd6fe;
+        --color-accent-7: #ede9fe;
+        --color-accent-8: #ffffff;
     }
 
     .dark {
@@ -39,19 +39,17 @@
         --color-error-light: #f33;
         --color-error: red;
         --color-error-dark: #e60000;
-        /* Halix Cloud — dark */
-        --color-foreground: #f5f3ff;
-        --color-background: #0b0613;
+        /* Halix Cloud — darker contrast mode */
+        --color-foreground: #faf5ff;
+        --color-background: #040208;
 
-        /* surfaces (deep violet) */
-        --color-accent-1: #140a24;
-        --color-accent-2: #1f0f38;
-        --color-accent-3: #2e1065;
+        --color-accent-1: #020104;
+        --color-accent-2: #0d0614;
+        --color-accent-3: #160a26;
 
-        /* brand + text ladder */
-        --color-accent-4: #a78bfa;
+        --color-accent-4: #8b5cf6;
         --color-accent-5: #c4b5fd;
-        --color-accent-6: #ede9fe; /* body text */
+        --color-accent-6: #ede9fe;
         --color-accent-7: #f5f3ff;
         --color-accent-8: #ffffff;
     }
@@ -64,9 +62,10 @@ html,
 
 body {
     @apply bg-accent-100 text-accent-600 overflow-x-hidden h-full;
-    background-image: radial-gradient(1200px 600px at 10% 0%, rgba(124, 58, 237, 0.18), transparent 55%),
-        radial-gradient(900px 500px at 100% 10%, rgba(91, 33, 182, 0.14), transparent 50%),
-        radial-gradient(700px 600px at 50% 100%, rgba(167, 139, 250, 0.12), transparent 55%);
+    background-image: radial-gradient(1100px 520px at 15% -10%, rgba(124, 58, 237, 0.22), transparent 52%),
+        radial-gradient(900px 480px at 95% 5%, rgba(91, 33, 182, 0.2), transparent 48%),
+        radial-gradient(800px 560px at 50% 105%, rgba(76, 29, 149, 0.35), transparent 55%),
+        linear-gradient(180deg, var(--color-accent-1) 0%, var(--color-accent-2) 45%, var(--color-accent-1) 100%);
 }
 
 input,
@@ -90,7 +89,7 @@ a {
 }
 
 .dd {
-    @apply text-black mt-1 font-medium;
+    @apply text-foreground mt-1 font-medium;
 }
 
 .h5 {
