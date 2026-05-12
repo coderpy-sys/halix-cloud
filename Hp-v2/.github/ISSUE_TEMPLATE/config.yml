@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
   - name: Installation Help
-    url: https://discord.convoypanel.com
+    url: https://discord.gg/freehost
     about: Please visit our Discord for help with your installation.
   - name: General Question
-    url: https://discord.convoypanel.com
-    about: Please visit our Discord for general questions about Convoy.
+    url: https://discord.gg/freehost
+    about: Please visit our Discord for general questions about Halix Cloud.
   - name: Documentation
-    url: https://convoypanel.com
+    url: https://halix.cloud
     about: Our documentation may have an answer for your issue/question.

@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Bug reports should only be used for reporting issues with how the software works. For assistance installing this software, as well as debugging issues with dependencies, please use our [Discord server](https://discord.convoypanel.com).
+        Bug reports should only be used for reporting issues with how the software works. For assistance installing this software, as well as debugging issues with dependencies, please use our [Discord server](https://discord.gg/freehost).
 
   - type: textarea
     attributes:
@@ -44,7 +44,7 @@ body:
   - type: input
     attributes:
       label: Operating System
-      description: The OS you are using on your own computer to use Convoy.
+      description: The OS you are using on your own computer to use Halix Cloud.
       placeholder: Windows 11 22H2
     validations:
       required: true
@@ -76,14 +76,13 @@ body:
     attributes:
       label: Error Logs
       description: |
-        Check out [this page on our documentation](https://convoypanel.com/docs/project/support.html#collecting-panel-logs) for the log collector utility. You will need to run this on the server
-        hosting your instance of Convoy.
+        Check out [this page on our documentation](https://halix.cloud/docs) for the log collector utility. You will need to run this on the server hosting your instance of Halix Cloud.
       placeholder: "https://paste.frocdn.com/"
 
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
-      description: Please [search here](https://github.com/convoypanel/panel/issues) to see if an issue already exists for your problem.
+      description: Please [search here](https://github.com/coderpy-sys/halix-cloud/issues) to see if an issue already exists for your problem.
       options:
         - label: I have searched the existing issues before opening this issue.
           required: true

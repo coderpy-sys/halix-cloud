@@ -16,16 +16,21 @@
         --color-warning-light: #f7b955;
         --color-warning: #f5a623;
         --color-warning-dark: #ab570a;
-        --color-foreground: #1e1b4b;
-        --color-background: #fff;
-        --color-accent-1: #faf5ff;
-        --color-accent-2: #ede9fe;
-        --color-accent-3: #ddd6fe;
-        --color-accent-4: #a1a1aa;
-        --color-accent-5: #71717a;
-        --color-accent-6: #52525b;
-        --color-accent-7: #3f3f46;
-        --color-accent-8: #27272a;
+        /* Halix Cloud — light */
+        --color-foreground: #1c1133;
+        --color-background: #ffffff;
+
+        /* surfaces */
+        --color-accent-1: #fbf7ff;
+        --color-accent-2: #f4ebff;
+        --color-accent-3: #ead7ff;
+
+        /* brand + text ladder */
+        --color-accent-4: #a78bfa; /* purple-400 */
+        --color-accent-5: #6d28d9; /* deep Halix purple */
+        --color-accent-6: #1c1133; /* body text */
+        --color-accent-7: #2a1a4a;
+        --color-accent-8: #18181b;
     }
 
     .dark {
@@ -34,16 +39,21 @@
         --color-error-light: #f33;
         --color-error: red;
         --color-error-dark: #e60000;
+        /* Halix Cloud — dark */
         --color-foreground: #f5f3ff;
-        --color-background: #0c0118;
-        --color-accent-1: #1e1033;
-        --color-accent-2: #2e1065;
-        --color-accent-3: #4c1d95;
+        --color-background: #0b0613;
+
+        /* surfaces (deep violet) */
+        --color-accent-1: #140a24;
+        --color-accent-2: #1f0f38;
+        --color-accent-3: #2e1065;
+
+        /* brand + text ladder */
         --color-accent-4: #a78bfa;
         --color-accent-5: #c4b5fd;
-        --color-accent-6: #ddd6fe;
-        --color-accent-7: #ede9fe;
-        --color-accent-8: #f5f3ff;
+        --color-accent-6: #ede9fe; /* body text */
+        --color-accent-7: #f5f3ff;
+        --color-accent-8: #ffffff;
     }
 }
 
@@ -53,7 +63,10 @@ html,
 }
 
 body {
-    @apply bg-accent-100 text-accent-500 overflow-x-hidden h-full;
+    @apply bg-accent-100 text-accent-600 overflow-x-hidden h-full;
+    background-image: radial-gradient(1200px 600px at 10% 0%, rgba(124, 58, 237, 0.18), transparent 55%),
+        radial-gradient(900px 500px at 100% 10%, rgba(91, 33, 182, 0.14), transparent 50%),
+        radial-gradient(700px 600px at 50% 100%, rgba(167, 139, 250, 0.12), transparent 55%);
 }
 
 input,

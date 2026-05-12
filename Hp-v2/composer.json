@@ -1,7 +1,7 @@
 {
   "name": "halix-cloud/panel",
   "type": "project",
-  "description": "Halix Cloud panel — Proxmox KVM management (Convoy-derived).",
+  "description": "Halix Cloud panel — Proxmox KVM management.",
   "keywords": [
     "proxmox",
     "kvm",

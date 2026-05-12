@@ -19,35 +19,28 @@ type SessionUserBootstrap = {
 
 interface ExtendedWindow extends Window {
     HalixUser?: SessionUserBootstrap
-    /** @deprecated Use HalixUser */
-    ConvoyUser?: SessionUserBootstrap
     SiteConfiguration?: {
         version: string
     }
 }
 
 const App = () => {
-    const { HalixUser, ConvoyUser, SiteConfiguration } = window as ExtendedWindow
-    const sessionUser = HalixUser ?? ConvoyUser
+    const { HalixUser, SiteConfiguration } = window as ExtendedWindow
 
-    if (sessionUser && !store.getState().user.data) {
+    if (HalixUser && !store.getState().user.data) {
         store.getActions().user.setUserData({
-            name: sessionUser.name,
-            email: sessionUser.email,
-            rootAdmin: sessionUser.root_admin,
-            createdAt: sessionUser.created_at,
-            updatedAt: sessionUser.updated_at,
+            name: HalixUser.name,
+            email: HalixUser.email,
+            rootAdmin: HalixUser.root_admin,
+            createdAt: HalixUser.created_at,
+            updatedAt: HalixUser.updated_at,
         })
     }
 
     if (!store.getState().settings.data) {
         store.getActions().settings.setSettings({
             theme:
-                localStorage.theme === 'dark' ||
-                (!('theme' in localStorage) &&
-                    window.matchMedia('(prefers-color-scheme: dark)').matches)
-                    ? 'dark'
-                    : 'light',
+                localStorage.theme === 'light' ? 'light' : 'dark',
             version: SiteConfiguration!.version,
         })
     }

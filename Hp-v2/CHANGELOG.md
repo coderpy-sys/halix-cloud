@@ -8,7 +8,7 @@ This project follows [Semantic Versioning](http://semver.org) guidelines.
 
 ### TIME SENSITIVE SECURITY UPDATE
 
-Please update immediately to this version to ensure your Convoy installation is secure.
+Please update immediately to this version to ensure your Halix Cloud installation is secure.
 
 ### Changes
 
@@ -19,7 +19,7 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 ### TIME SENSITIVE SECURITY UPDATE
 
-Please update immediately to this version to ensure your Convoy installation is secure.
+Please update immediately to this version to ensure your Halix Cloud installation is secure.
 
 ### Changes
 
@@ -29,7 +29,7 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 ### TIME SENSITIVE SECURITY UPDATE
 
-Please update immediately to this version to ensure your Convoy installation is secure.
+Please update immediately to this version to ensure your Halix Cloud installation is secure.
 
 ### Changes
 
@@ -39,7 +39,7 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 ### TIME SENSITIVE SECURITY UPDATE
 
-Please update immediately to this version to ensure your Convoy installation is secure. Details are still pending.
+Please update immediately to this version to ensure your Halix Cloud installation is secure. Details are still pending.
 
 
 ## v4.4.0
@@ -58,9 +58,9 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 - Added guest agent support for changing Windows user passwords #120
     - This feature is still experimental. Please provide feedback on
-      our [Discord community](https://discord.convoypanel.com/) and report bugs on
+      our [Discord community](https://discord.gg/freehost/) and report bugs on
       our [GitHub
-      repository](https://github.com/ConvoyPanel/panel/issues).
+      repository](https://github.com/Halix CloudPanel/panel/issues).
 - Servers will now automatically start after unsuspension #119
 - Fixed parsing of user realm types #126
 - Fixed broken redirect when unauthenticated while accessing certain admin routes #123
@@ -91,7 +91,7 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 ### Changes
 
-- Updated code for applying rate limits to NIC. Convoy will no longer override settings other than ratelimit, NIC
+- Updated code for applying rate limits to NIC. Halix Cloud will no longer override settings other than ratelimit, NIC
   model (e.g., e1000, vmxnet3, virtio, etc.), and firewall status.
 
 #### From v4.2.2-rc.2
@@ -154,9 +154,9 @@ Please update immediately to this version to ensure your Convoy installation is 
 
 ## v4.0.0-beta
 
-If you use Convoy for a production or commercial environment/purpose, please subscribe to a
-license [here](https://console.convoypanel.com). It supports my work, and you are also violating the license agreement
-if you don't. Your deployment of Convoy may be disabled without warning if you don't adhere to the terms of the license
+If you use Halix Cloud for a production or commercial environment/purpose, please subscribe to a
+license [here](https://halix.cloud). It supports my work, and you are also violating the license agreement
+if you don't. Your deployment of Halix Cloud may be disabled without warning if you don't adhere to the terms of the license
 agreement.
 
 ### Changes
@@ -215,9 +215,9 @@ agreement.
 
 ## v4.0.0-rc.1
 
-If you use Convoy for a production or commercial environment/purpose, please subscribe to a
-license [here](https://console.convoypanel.com). It supports my work, and you are also violating the license agreement
-if you don't. Your deployment of Convoy may be disabled without warning if you don't adhere to the terms of the license
+If you use Halix Cloud for a production or commercial environment/purpose, please subscribe to a
+license [here](https://halix.cloud). It supports my work, and you are also violating the license agreement
+if you don't. Your deployment of Halix Cloud may be disabled without warning if you don't adhere to the terms of the license
 agreement.
 
 ### Changes
@@ -273,13 +273,13 @@ agreement.
 
 ## v3.9.0-beta
 
-The release candidate process for non-beta v3.9.0 was discontinued. Convoy will be keeping its beta status while more
+The release candidate process for non-beta v3.9.0 was discontinued. Halix Cloud will be keeping its beta status while more
 improvements to the product are made.
 
 If you are upgrading from v3.8.1-beta, keep note of these notices:
 
 - v3.9.0-rc.9: :warning: This release may require you to regenerate your Proxmox API token credentials for each of your
-  nodes with the implementation of encryption of node credentials in Convoy from this point on.
+  nodes with the implementation of encryption of node credentials in Halix Cloud from this point on.
 - v3.9.0-rc.3: :warning: This release makes changes to the data in your database. Rows that have a non-null `deleted_at`
   field in
   your `servers` and `users` table will be purged. If your routine relies on soft deletes, please make changes now to
@@ -302,7 +302,7 @@ If you are upgrading from v3.8.1-beta, keep note of these notices:
 ## v3.9.0-rc.9
 
 :warning: This release may require you to regenerate your Proxmox API token credentials for each of your nodes with the
-implementation of encryption of node credentials in Convoy from this point on.
+implementation of encryption of node credentials in Halix Cloud from this point on.
 
 ### Added
 
@@ -355,7 +355,7 @@ relying on them as they are removed in this update.
 
 ### Added
 
-- Base code for adding translations/localizations to Convoy
+- Base code for adding translations/localizations to Halix Cloud
 
 ### Removed
 
@@ -385,7 +385,7 @@ relying on them as they are removed in this update.
 
 - Internal HTTP client from Guzzle to a wrapper of it from Laravel
 - VM building, deletion, and server deletion logic
-    - This should improve reliability of Convoy tremendously
+    - This should improve reliability of Halix Cloud tremendously
 
 ## v3.8.1-beta
 
@@ -449,7 +449,7 @@ relying on them as they are removed in this update.
 - Refactored Server Usages and Rate Limit sync for better scaling
 - Minor frontend styling
 - Refactored disk data transfer object
-- All password inputs (except for Convoy user account password) has these two validation rules:
+- All password inputs (except for Halix Cloud user account password) has these two validation rules:
     1. `/^[A-Za-z0-9!@#$%^&*()_+\-=[\]{}|;\':",.\/<>?\\ ]*$/` for checking if the password contains only characters on
        the U.S. English keyboard.
     2. `/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/` for checking if the password contains 8
@@ -472,7 +472,7 @@ relying on them as they are removed in this update.
 
 ### Note
 
-If you are developing automation software for Convoy, please implement these regular expressions in your code.
+If you are developing automation software for Halix Cloud, please implement these regular expressions in your code.
 Otherwise, your code will error when you send invalid requests.
 
 - server `account_password` validation
@@ -503,7 +503,7 @@ Otherwise, your code will error when you send invalid requests.
 
 ### Added
 
-- Support for hosting Convoy without a hostname
+- Support for hosting Halix Cloud without a hostname
 
 ### Changed
 

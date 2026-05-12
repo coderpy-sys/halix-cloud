@@ -30,4 +30,4 @@ Environment variables:
 | `HALIX_PANEL_DIR` | `$HALIX_CLOUD_ROOT/Hp-v2` | Panel root (Composer / Artisan / npm) |
 | `HALIX_SKIP_SYS_DEPS` | `0` | Set to `1` to skip apt/dnf and only clone + Composer + npm |
 
-After install, copy `Hp-v2/.env.example` to `Hp-v2/.env`, set `APP_KEY`, database, Redis, and `APP_URL`, then run migrations and queue workers per [Convoy deployment documentation](https://docs.convoypanel.com).
+After install, copy `Hp-v2/.env.example` to `Hp-v2/.env`, set `APP_KEY`, database, Redis, and `APP_URL`, then run migrations and queue workers according to your stack configuration.

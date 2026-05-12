@@ -16,7 +16,7 @@
         "name": "windows.com",
         "boot": "order=sata0",
         "ide0": "local-lvm:vm-608782004-cloudinit,media=cdrom,size=4M",
-        "description": "# Owner\n\n**John Smith** (CONVOY ID: 239) \n<br>\njohn.smith@example.com\n<br>\n\n# Quick Actions\n\n<a href=\"https://google.com\">Manage Owner</a>\n<br>\n<a href=\"https://google.com\">Manage Server</a>\n\n<a href=\"https://convoypanel.com\"><img src=\"https://imgur.com/I7624db.png\" alt=\"Managed by Convoy watermark\" /></a>",
+        "description": "# Owner\n\n**John Smith** (HALIX ID: 239) \n<br>\njohn.smith@example.com\n<br>\n\n# Quick Actions\n\n<a href=\"https://google.com\">Manage Owner</a>\n<br>\n<a href=\"https://google.com\">Manage Server</a>\n\n<a href=\"https://halix.cloud\"><img src=\"https://imgur.com/I7624db.png\" alt=\"Managed by Halix Cloud watermark\" /></a>",
         "digest": "47fb9b586691ee1d97020370b9e7bfc8382a2db6",
         "serial0": "socket",
         "memory": 2000

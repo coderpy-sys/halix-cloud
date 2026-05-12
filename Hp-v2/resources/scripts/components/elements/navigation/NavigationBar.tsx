@@ -110,7 +110,7 @@ const NavigationBar = () => {
     }
 
     return (
-        <div className='bg-white w-full dark:bg-black'>
+        <div className='w-full'>
             {isAdminArea && <AdminBanner />}
             <LoadingOverlay visible={isLoggingOut} zIndex={4000} />
             <ContentContainer ref={topBar} className='pt-3 pb-1.5 relative'>
@@ -128,7 +128,7 @@ const NavigationBar = () => {
                         {breadcrumb && (
                             <>
                                 <div className='py-1.5 h-full'>
-                                    <div className='rotate-[25deg] w-[2px] h-full bg-[#eaeaea] dark:bg-[#333] rounded-full' />
+                                    <div className='rotate-[25deg] w-[2px] h-full bg-accent-200/70 dark:bg-accent-300/60 rounded-full' />
                                 </div>
                                 <p className='shrink font-medium text-sm text-foreground truncate text-ellipsis overflow-hidden whitespace-nowrap'>
                                     {breadcrumb}
@@ -154,7 +154,7 @@ const NavigationBar = () => {
             />
             <div
                 ref={bottomBar}
-                className='bg-white shadow-none transition-shadow dark:bg-black w-full border-b border-accent-200 z-[2000]'
+                className='shadow-none transition-shadow w-full border-b border-accent-200/70 dark:border-accent-300/50 z-[2000] bg-background/75 dark:bg-background/55 backdrop-blur supports-[backdrop-filter]:bg-background/65'
             >
                 <ContentContainer className='flex w-full'>
                     <div
@@ -184,7 +184,7 @@ const NavigationBar = () => {
             </div>
             <div
                 ref={placeholder}
-                className='hidden h-[49px] w-full bg-white dark:bg-black'
+                className='hidden h-[49px] w-full bg-transparent'
             />
         </div>
     )

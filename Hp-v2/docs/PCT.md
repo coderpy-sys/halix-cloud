@@ -1,6 +1,6 @@
 # Proxmox PCT (LXC) support
 
-Halix Cloud v2 is derived from Convoy, which targets **QEMU/KVM** guests and calls Proxmox APIs under `/api2/json/nodes/{node}/qemu/{vmid}/...`.
+Halix Cloud v2 is Proxmox-focused and targets **QEMU/KVM** guests, calling Proxmox APIs under `/api2/json/nodes/{node}/qemu/{vmid}/...`.
 
 **PCT** containers use different endpoints (`/nodes/{node}/lxc/{vmid}/...`) and capabilities (no VGA the same way, different config keys, backup paths, etc.).
 
